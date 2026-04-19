@@ -2,7 +2,7 @@
 
 void segitiga(){
     int n;
-    printf("Masukkan tinggi penuh: ");
+    printf("Masukkan tinggi ukuran: ");
     scanf("%d", &n);
 
     if (n % 2 == 0){
