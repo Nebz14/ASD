@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 10 // Batas aman untuk mencegah stack overflow
-
-/* ============================================================
-   FUNGSI UTILITAS (Mencegah terminal berantakan)
-   ============================================================ */
+#define MAX_SIZE 10
 
 void clear_input() {
     int c;
@@ -14,7 +10,7 @@ void clear_input() {
 
 void pause_kembali() {
     printf("\n[Tekan Enter untuk kembali ke Menu Utama...]");
-    clear_input(); // Menangkap enter
+    clear_input();
 }
 
 void clear_screen() {
@@ -25,18 +21,13 @@ void clear_screen() {
     #endif
 }
 
-/* ============================================================
-   FITUR 1: MEMBUAT SEGITIGA BINTANG
-   (Menggunakan pola Infinity/Butterfly >< sesuai riwayat preferensi)
-   ============================================================ */
-
+//Fungsi untuk pilihan input 1
 void segitiga_bintang() {
     int n;
-
     clear_screen();
-    printf("========================================\n");
-    printf("      POLA SEGITIGA BINTANG (><)        \n");
-    printf("========================================\n");
+    printf("======================================\n");
+    printf("      POLA SEGITIGA BINTANG (><)      \n");
+    printf("======================================\n");
     printf("Masukkan tinggi ukuran (bilangan ganjil): ");
     scanf("%d", &n);
     clear_input();
@@ -45,29 +36,42 @@ void segitiga_bintang() {
         printf("\n[ERROR] Input harus bilangan ganjil positif!\n");
         pause_kembali();
         return;
+    } else {
+        int mid = (n + 1) / 2;
+        
+        //Bagian Atas
+        for (int i = 1; i <= mid; i++){
+            for (int j = 1; j <= i; j++)
+                printf("*");
+
+            for (int j = 1; j <= 2 * (mid - i); j++)
+                printf(" ");
+
+            for (int j = 1; j <= i; j++)
+                printf("*");
+
+            printf("\n");
+        }
+
+        //Bagian Bawah
+        for (int i = mid - 1; i >= 1; i--){
+            for (int j = 1; j <= i; j++)
+                printf("*");
+
+            for (int j = 1; j <= 2 * (mid - i); j++)
+                printf(" ");
+
+            for (int j = 1; j <= i; j++)
+                printf("*");
+
+            printf("\n");
+        }
     }
 
-    printf("\n");
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            // Logika matriks untuk segitiga menyempit ke tengah
-            if ((j <= i && j <= n - i + 1) || (j >= i && j >= n - i + 1)) {
-                printf("* ");
-            } else {
-                printf("  ");
-            }
-        }
-        printf("\n");
-    }
-    
     pause_kembali();
 }
 
-/* ============================================================
-   FITUR 2: INPUT DAN TAMPILKAN ARRAY 3 DIMENSI
-   (SANGAT KETAT SESUAI TEKS PROYEKTOR)
-   ============================================================ */
-
+//Fungsi untuk pilihan input 2
 void array3D() {
     int lapis, baris, kolom;
 
@@ -84,12 +88,12 @@ void array3D() {
     scanf("%d", &kolom);
     clear_input();
 
-    // Validasi dimensi
     if (lapis <= 0 || baris <= 0 || kolom <= 0) {
         printf("\n[ERROR] Ukuran dimensi tidak boleh 0 atau negatif!\n");
         pause_kembali();
         return;
     }
+
     if (lapis > MAX_SIZE || baris > MAX_SIZE || kolom > MAX_SIZE) {
         printf("\n[ERROR] Ukuran melebihi batas maksimal memori (%d)!\n", MAX_SIZE);
         pause_kembali();
@@ -107,7 +111,7 @@ void array3D() {
                 printf("Input isi index [%d][%d][%d]: ", i, j, k);
                 scanf("%d", &arr[i][j][k]);
                 
-                // Menentukan nilai terbesar secara langsung
+                // Menentukan nilai terbesar
                 if (i == 0 && j == 0 && k == 0) {
                     nilai_terbesar = arr[i][j][k];
                 } else if (arr[i][j][k] > nilai_terbesar) {
@@ -118,7 +122,7 @@ void array3D() {
     }
     clear_input();
 
-    // Menjawab Syarat Proyektor: "Wajib memunculkan isi array per lapisan dan isi lengkap dengan index"
+    //
     printf("\n========================================\n");
     printf("      ISI ARRAY 3D PER LAPISAN          \n");
     printf("========================================\n");
@@ -132,7 +136,6 @@ void array3D() {
         }
     }
 
-    // Menjawab Syarat Proyektor: "total elemen dan nilai terbesar"
     printf("\n========================================\n");
     printf("TOTAL ELEMEN   : %d buah\n", total_elemen);
     printf("NILAI TERBESAR : %d\n", nilai_terbesar);
@@ -141,10 +144,7 @@ void array3D() {
     pause_kembali();
 }
 
-/* ============================================================
-   MAIN — SISTEM MENU PROGRAM
-   ============================================================ */
-
+//Tampilan menu
 int main() {
     int pilihan;
 
@@ -159,9 +159,7 @@ int main() {
         printf("=======================================\n");
         printf("Pilih menu: ");
         
-        // Membaca input
         if (scanf("%d", &pilihan) != 1) {
-            // Menangani jika user iseng memasukkan huruf di menu
             pilihan = 0; 
         }
         clear_input();
